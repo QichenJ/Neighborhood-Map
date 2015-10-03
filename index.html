@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Neighborhood Map</title>
+	<title>Coding Meetups</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
@@ -12,5 +12,25 @@
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBDG4PEiSz4kfikxfuEJvSZ33PWp5HPJM&callback=initMap"></script>
 </head>
 <body>
-	<div id="map"></div>
+	<div class="wrapper">
+		<div id="map"></div>
+		<div class="container">
+			<header>
+				<h1>Coding Meetups</h1>
+				<form id="search">
+					<input id="search-input" placeholder="Search" autofocus />
+					<button id="search-button"></button>
+				</form>
+			</header>
+			<aside>
+				<ul id="list">
+					<li class="meetup">
+						<span class="name"></span>
+						<span class="location"></span>
+						<div class="meetup-info"></div>
+					</li>
+				</ul>
+			</aside>
+		</div>
+	</div>
 </body>
