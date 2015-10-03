@@ -56,6 +56,19 @@ function fetchData(url) {
 }
 
 //Create ViewModel
+var ViewModel = function() {
+	var self = this;
+	var data = fetchData(meetupURL);
+	var meetupArr = [];
+	for(var meet: data) {
+		meetupArr.push(new Meetup(meet));
+	}
+	self.meetups = ko.observableArray(meetupArr);
+	self.search = function() {
+
+	}
+
+}
 //TODO create Meetup class
 var Meetup = function(meetup) {
 	var self = this;
@@ -65,11 +78,7 @@ var Meetup = function(meetup) {
 	self.name = meetup.name;
 	self.url = meetup.envent_url;
 }
-
-
-
-
-
+ko.applyBindings(new ViewModel());
 
 
 
