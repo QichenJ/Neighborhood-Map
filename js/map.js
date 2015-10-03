@@ -52,10 +52,19 @@ function fetchData(url) {
 		//TODO handle this failure
 
 	}
+	return result;
 }
 
+//Create ViewModel
 //TODO create Meetup class
-
+var Meetup = function(meetup) {
+	var self = this;
+	self.venue = meetup.venue;
+	self.hasVenue = self.venue ? true : false;
+	self.id = meetup.id;
+	self.name = meetup.name;
+	self.url = meetup.envent_url;
+}
 
 
 
