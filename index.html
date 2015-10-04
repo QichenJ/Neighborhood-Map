@@ -8,9 +8,9 @@
 		html, body { height: 100%; margin: 0; padding: 0}
 		#map { height: 100%; }
 	</style>
-	<script src="js/map.js"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBDG4PEiSz4kfikxfuEJvSZ33PWp5HPJM&callback=initMap"></script>
-</head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="js/knockout-3.3.0.js"></script>
+	</head>
 <body>
 	<div class="wrapper">
 		<div id="map"></div>
@@ -23,9 +23,9 @@
 				</form>
 			</header>
 			<aside>
-				<ul id="list">
+				<ul id="list" data-bind="foreach: meetups">
 					<li class="meetup">
-						<span class="name"></span>
+						<span class="name" data-bind="text: id"></span>
 						<span class="location"></span>
 						<div class="meetup-info"></div>
 					</li>
@@ -33,4 +33,6 @@
 			</aside>
 		</div>
 	</div>
+	<script src="js/map.js"></script>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBDG4PEiSz4kfikxfuEJvSZ33PWp5HPJM&callback=initMap"></script>
 </body>
