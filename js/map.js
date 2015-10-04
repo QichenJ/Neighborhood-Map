@@ -1,4 +1,4 @@
-var meetupURL = 'https://api.meetup.com/2/open_events?&sign=true&photo-host=public&lat=37.4347&state=CA&text=coding java python web&lon= -121.8950&radius=20&status=upcoming&page=20&key=6ab5e2d3c46794b78504857152479b';
+var meetupURL = 'https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=95035&text=coding java python c c++&radius=20&status=upcoming&page=50&key=6ab5e2d3c46794b78504857152479b';
 var map;
 /*A Google Map object*/
 var googleMap = function(center, element) {
@@ -34,11 +34,11 @@ function initMap() {
 var ViewModel = function() {
 	var self = this;
 	self.meetups = ko.observableArray([]);
+	self.positions = ko.observableArray([]);
 	fetchData(meetupURL);
 	self.search = function() {
 
 	}
-
 	function fetchData(url) {
 		var data;
 		var res = $.ajax({
@@ -53,12 +53,30 @@ var ViewModel = function() {
 			data.forEach(function(meetup) {
 				var newMeet = new Meetup(meetup, map);
 				self.meetups.push(newMeet);
+				addMeetup(newMeet);
 			});
 		});
 
 		res.fail(function(response, status, error) {
 		//TODO handle this failure
 		});
+	}
+
+	function addMeetup(meetup) {
+		if(meetup.hasVenue && meetup.venue.lat && meetup.venue.lon) {
+			var pos;
+			self.positions().forEach(function(position) {
+				if(position.id === meetup.venue.id) {
+					pos = position;
+					return;
+				}
+			});
+			if(pos == null) {
+				pos = new Position(meetup.venue, map);
+				self.positions.push(pos);
+			}
+			pos.add(meetup);
+		}
 	}
 	google.maps.event.addDomListener(window, 'load', initMap());
 
@@ -72,28 +90,38 @@ var Meetup = function(meetup, map) {
 	self.id = meetup.id;
 	self.name = meetup.name;
 	self.url = meetup.envent_url;
-	self.lat = 0;
-	self.lng = 0;
-	if(self.hasVenue) {
-		if(self.venue.lat) {
-			self.lat = self.venue.lat;
-		}
-
-		if(self.venue.lon) {
-			self.lng = self.venue.lon;
-		}
-	}
-	self.location = (self.lat === 0 || self.lng === 0) ? null : new google.maps.LatLng(self.lat, self.lng);
-	if(self.location) {
+	self.time = meetup.time;
+	self.count = meetup.headcount;
+	self.headcount = meetup.headcount;
+	self.location = new google.maps.LatLng(self.lon, self.lat);
 		var marker = new google.maps.Marker({
-			position: self.location,
-			map: map
-		});
-	}
+		position: self.location,
+		map: map
+	});
+
+
+
 }
 ko.applyBindings(new ViewModel());
 
-//Add
+//create Position class
+var Position = function(venue, map) {
+	var self = this;
+	self.id = venue.id;
+	self.lon = venue.lon;
+	self.lat = venue.lat;
+	self.location = new google.maps.LatLng(self.lon, self.lat);
+	self.address = venue.address_1;
+	self.meetups = ko.observableArray([]);
+	self.add = function(meetup) {
+		self.meetups.push(meetup);
+	}
+	var marker = new google.maps.Marker({
+		position: self.location,
+		map: map
+	});
+
+}
 
 
 
