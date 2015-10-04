@@ -7,8 +7,8 @@ var googleMap = function(center, element) {
 		zoom: 12,
 		center: center
 	}
-	var map = new google.maps.Map(element, options);
-	return map;
+	var gmap = new google.maps.Map(element, options);
+	return gmap;
 }
 
 
@@ -27,7 +27,7 @@ function initMap() {
 			};
 		});
 	}
-	map = new googleMap(center, element);
+	var map = googleMap(center, element);
 }
 
 

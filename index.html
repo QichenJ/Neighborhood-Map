@@ -5,15 +5,19 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<style>
-		html, body { height: 100%; margin: 0; padding: 0}
-		#map { height: 100%; }
+	html, body { height: 100%; margin: 0; padding: 0}
+	#map { height: 100%; }
+	.wrapper {
+		height: 100%;
+	}
 	</style>
+	<link rel="stylesheet" href="css/app.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/knockout-3.3.0.js"></script>
-	</head>
+</head>
 <body>
 	<div class="wrapper">
-		<div id="map"></div>
+		<div id="map">map</div>
 		<div class="container">
 			<header>
 				<h1>Coding Meetups</h1>
@@ -25,7 +29,7 @@
 			<aside>
 				<ul id="list" data-bind="foreach: meetups">
 					<li class="meetup">
-						<span class="name" data-bind="text: id"></span>
+						<span class="name" data-bind="text: name"></span>
 						<span class="location"></span>
 						<div class="meetup-info"></div>
 					</li>
@@ -36,3 +40,4 @@
 	<script src="js/map.js"></script>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBDG4PEiSz4kfikxfuEJvSZ33PWp5HPJM&callback=initMap"></script>
 </body>
+</html>
