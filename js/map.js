@@ -126,9 +126,10 @@ var Meetup = function(meetup, map) {
 	self.id = meetup.id;
 	self.name = meetup.name;
 	self.url = meetup.event_url;
-	self.time = meetup.time;
+	self.time = new Date(meetup.time).toLocaleDateString();
 	self.count = meetup.headcount;
 	self.headcount = meetup.headcount;
+	self.groupName = meetup.group ? meetup.group.name : 'undefined';
 }
 ko.applyBindings(new ViewModel());
 
@@ -152,7 +153,7 @@ var Position = function(venue, map) {
 		var result = '<ul class="info-window-list">';
 		self.meetups().forEach(function(meetup) {
 			result += '<li>' + '<a href="' + meetup.url + '">' + meetup.name  +
-			'</a>' + ' on ' + meetup.date + '</li>';
+			'</a>' + ' on ' + meetup.time + ' by ' + meetup.groupName +'</li>';
 		});
 		result += '</ul>';
 		result = '<div class="info-window">' + '<span class="info-header">' +
