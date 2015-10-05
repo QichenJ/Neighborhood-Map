@@ -152,12 +152,12 @@ var Position = function(venue, map) {
 	self.string = ko.computed(function() {
 		var result = '<ul class="info-window-list">';
 		self.meetups().forEach(function(meetup) {
-			result += '<li>' + '<a href="' + meetup.url + '">' + meetup.name  +
+			result += '<li class="info-li">' + '<a href="' + meetup.url + '">' + meetup.name  +
 			'</a>' + ' on ' + meetup.time + ' by ' + meetup.groupName +'</li>';
 		});
 		result += '</ul>';
 		result = '<div class="info-window">' + '<span class="info-header">' +
-		self.name + '</span>' + '<p>' + self.address + '</p>' + result +
+		self.name + '</span>' + '<p class="info-loc">' + self.address + '</p>' + result +
 		'</div>';
 		return result;
 	});

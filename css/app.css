@@ -1,7 +1,14 @@
-html, body { height: 100%; margin: 0; padding: 0}
+html, body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+}
+
 .wrapper {
 	height: 100%;
 }
+
 header, aside {
 	color: white;
 	background: rgba(0, 0, 0, 0.7);
@@ -17,18 +24,78 @@ header {
 }
 
 #map { height: 100%;}
+
+.search-title {
+	margin: 5px;
+	font-size: 25px;
+}
+
+.sp-icon {
+	font-size: 20px;
+	margin: 0;
+	padding: 0;
+}
+
 aside {
 	top: 0;
 	right: 0;
 	height: 100%;
 	overflow: scroll;
-	padding: 0;
-}
-li {
-	list-style-type: none;
 	padding: 8px;
 }
 
+ul {
+	padding: 0;
+}
+
+.meetup:hover {
+	color: black;
+	background-color: #D84040;
+	cursor: pointer;
+}
+
+.meetup {
+	font-size: 20px;
+	padding: 8px;
+	list-style-type: none;
+}
+
 .meet-name {
+	display: inline-block;
+	width: 80%;
+	left: 10px;
+	height: 100%;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
 
 }
+
+.meet-number {
+	display: inline-block;
+	width: 10%;
+	right: 0;
+}
+
+.info-header {
+	font-weight: bold;
+}
+
+.info-loc {
+	color: rgba(0, 0, 0, 0.8);
+	padding: 0;
+	margin: 0;
+
+}
+
+a {
+	text-decoration: none;
+	color: #43ADC5;
+}
+
+.info-li {
+	display: list-item;
+	list-style: circle;
+	margin-bottom: 2px;
+}
+

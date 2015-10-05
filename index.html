@@ -7,6 +7,8 @@
 	<style>
 	</style>
 	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="js/knockout-3.3.0.js"></script>
 </head>
@@ -15,10 +17,12 @@
 		<div id="map">map</div>
 		<div class="container">
 			<header>
-				<h1>Coding Meetups</h1>
+				<h1 class="search-title">Coding Meetups</h1>
 				<form id="search" data-bind="submit: search">
 					<input data-bind="value: inputStr" id="search-input" placeholder="Search" autofocus />
-					<button id="search-button" type="submit"></button>
+					<button id="search-button" type="submit">
+						<span class="fa fa-search"></span>
+					</button>
 				</form>
 			</header>
 			<aside>
@@ -26,7 +30,6 @@
 					<li class="meetup" data-bind="click: $root.selectPos">
 						<span class="meet-name" data-bind="text: name"></span>
 						<span class="meet-number" data-bind="text: length"></span>
-						<div class="meetup-info"></div>
 					</li>
 				</ul>
 			</aside>
