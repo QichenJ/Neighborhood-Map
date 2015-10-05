@@ -16,13 +16,13 @@
 		<div class="container">
 			<header>
 				<h1>Coding Meetups</h1>
-				<form id="search">
-					<input id="search-input" placeholder="Search" autofocus />
-					<button id="search-button"></button>
+				<form id="search" data-bind="submit: search">
+					<input data-bind="value: inputStr" id="search-input" placeholder="Search" autofocus />
+					<button id="search-button" type="submit"></button>
 				</form>
 			</header>
 			<aside>
-				<ul id="list" data-bind="foreach: {data : positions, as : 'pos'}">
+				<ul id="list" data-bind="foreach: {data : positionsShowed, as : 'pos'}">
 					<li class="meetup" data-bind="click: $root.selectPos">
 						<span class="meet-name" data-bind="text: name"></span>
 						<span class="meet-number" data-bind="text: length"></span>

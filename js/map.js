@@ -36,9 +36,24 @@ var ViewModel = function() {
 	self.meetups = ko.observableArray([]);
 	self.positions = ko.observableArray([]);
 	fetchData(meetupURL);
+	self.inputStr = ko.observable('');
 	self.search = function() {
 
 	}
+	self.positionsShowed = ko.computed(function() {
+		self.positions().forEach(function(pos) {
+			pos.marker.setMap(null);
+		});
+		var result;
+		var filter = function(position) {
+			return position.name.toLowerCase().indexOf(self.inputStr().toLowerCase()) !== -1;
+		}
+		result = ko.utils.arrayFilter(self.positions(), filter);
+		result.forEach(function(pos){
+			pos.marker.setMap(map);
+		});
+		return result;
+	});
 	function fetchData(url) {
 		var data;
 		var res = $.ajax({
