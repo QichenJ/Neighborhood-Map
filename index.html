@@ -24,7 +24,8 @@
 			<aside>
 				<ul id="list" data-bind="foreach: positions">
 					<li class="meetup">
-						<span class="meet-name" data-bind="text: address"></span>
+						<span class="meet-name" data-bind="text: name"></span>
+						<span class="meet-number" data-bind="text: length"></span>
 						<div class="meetup-info"></div>
 					</li>
 				</ul>
@@ -33,5 +34,5 @@
 	</div>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBDG4PEiSz4kfikxfuEJvSZ33PWp5HPJM"></script>
 	<script src="js/map.js"></script>
-	</body>
+</body>
 </html>

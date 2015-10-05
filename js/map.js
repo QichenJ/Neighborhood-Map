@@ -93,14 +93,6 @@ var Meetup = function(meetup, map) {
 	self.time = meetup.time;
 	self.count = meetup.headcount;
 	self.headcount = meetup.headcount;
-	self.location = new google.maps.LatLng(self.lon, self.lat);
-		var marker = new google.maps.Marker({
-		position: self.location,
-		map: map
-	});
-
-
-
 }
 ko.applyBindings(new ViewModel());
 
@@ -110,46 +102,20 @@ var Position = function(venue, map) {
 	self.id = venue.id;
 	self.lon = venue.lon;
 	self.lat = venue.lat;
-	self.location = new google.maps.LatLng(self.lon, self.lat);
+	self.location = new google.maps.LatLng(self.lat, self.lon);
 	self.address = venue.address_1;
 	self.meetups = ko.observableArray([]);
+	self.name = venue.name;
+	self.length = ko.computed(function() {
+		return self.meetups().length;
+	});
 	self.add = function(meetup) {
 		self.meetups.push(meetup);
 	}
 	var marker = new google.maps.Marker({
 		position: self.location,
-		map: map
+		map: map,
+		animation: google.maps.Animation.DROP
 	});
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
