@@ -55,6 +55,11 @@ var ViewModel = function() {
 				self.meetups.push(newMeet);
 				addMeetup(newMeet);
 			});
+			self.positions().forEach(function(position) {
+				google.maps.event.addListener(position.marker, 'click', function() {
+					self.selectPos(position);
+				});
+			});
 		});
 
 		res.fail(function(response, status, error) {
@@ -78,6 +83,22 @@ var ViewModel = function() {
 			pos.add(meetup);
 		}
 	}
+	var infowindow = new google.maps.InfoWindow();
+	self.selectPos = function (position) {
+		if(position.marker.getAnimation() !== null) {
+			position.marker.setAnimation(null);
+		} else {
+			position.marker.setAnimation(google.maps.Animation.BOUNCE);
+		}
+		map.panTo(position.location);
+		infowindow.setContent(position.string());
+		infowindow.open(map, position.marker);
+		self.positions().forEach(function(temp) {
+			if(temp != position) {
+				temp.marker.setAnimation(null);
+			}
+		});
+	}
 	google.maps.event.addDomListener(window, 'load', initMap());
 
 
@@ -89,7 +110,7 @@ var Meetup = function(meetup, map) {
 	self.hasVenue = self.venue ? true : false;
 	self.id = meetup.id;
 	self.name = meetup.name;
-	self.url = meetup.envent_url;
+	self.url = meetup.event_url;
 	self.time = meetup.time;
 	self.count = meetup.headcount;
 	self.headcount = meetup.headcount;
@@ -112,10 +133,21 @@ var Position = function(venue, map) {
 	self.add = function(meetup) {
 		self.meetups.push(meetup);
 	}
-	var marker = new google.maps.Marker({
+	self.string = ko.computed(function() {
+		var result = '<ul class="info-window-list">';
+		self.meetups().forEach(function(meetup) {
+			result += '<li>' + '<a href="' + meetup.url + '">' + meetup.name  +
+			'</a>' + ' on ' + meetup.date + '</li>';
+		});
+		result += '</ul>';
+		result = '<div class="info-window">' + '<span class="info-header">' +
+		self.name + '</span>' + '<p>' + self.address + '</p>' + result +
+		'</div>';
+		return result;
+	});
+	self.marker = new google.maps.Marker({
 		position: self.location,
 		map: map,
 		animation: google.maps.Animation.DROP
 	});
-
 }
