@@ -22,8 +22,8 @@
 				</form>
 			</header>
 			<aside>
-				<ul id="list" data-bind="foreach: positions">
-					<li class="meetup">
+				<ul id="list" data-bind="foreach: {data : positions, as : 'pos'}">
+					<li class="meetup" data-bind="click: $root.selectPos">
 						<span class="meet-name" data-bind="text: name"></span>
 						<span class="meet-number" data-bind="text: length"></span>
 						<div class="meetup-info"></div>

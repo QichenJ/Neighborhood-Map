@@ -83,7 +83,7 @@ var ViewModel = function() {
 			pos.add(meetup);
 		}
 	}
-	var infowindow = new google.maps.InfoWindow();
+	var infowindow = new google.maps.InfoWindow({maxWidth : 250});
 	self.selectPos = function (position) {
 		if(position.marker.getAnimation() !== null) {
 			position.marker.setAnimation(null);
