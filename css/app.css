@@ -99,3 +99,27 @@ a {
 	margin-bottom: 2px;
 }
 
+@media only screen and (max-width: 750px) {
+	header {
+		height: 40%;
+		width: 100%;
+		position: static;
+		background-color: black;
+	}
+
+	aside {
+		height: 200px;
+		width: 100%;
+		position: static;
+		overflow: scroll;
+	}
+
+	#map {
+		height: 60%;
+	}
+
+	#container {
+		height: 40%;
+	}
+}
+

@@ -6,10 +6,10 @@ var googleMap = function(center, element) {
 	var options = {
 		zoom: 12,
 		center: center
-	}
+	};
 	var gmap = new google.maps.Map(element, options);
 	return gmap;
-}
+};
 
 //Initial map
 function initMap() {
@@ -17,7 +17,7 @@ function initMap() {
 	var center = {
 		lat: 37.4347,
 		lng: -121.8950
-	}
+	};
 	if(navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position) {
 			center = {
@@ -39,7 +39,7 @@ var ViewModel = function() {
 	self.inputStr = ko.observable('');
 	self.search = function() {
 
-	}
+	};
 	self.positionsShowed = ko.computed(function() {
 		self.positions().forEach(function(pos) {
 			pos.marker.setMap(null);
@@ -47,7 +47,7 @@ var ViewModel = function() {
 		var result;
 		var filter = function(position) {
 			return position.name.toLowerCase().indexOf(self.inputStr().toLowerCase()) !== -1;
-		}
+		};
 		result = ko.utils.arrayFilter(self.positions(), filter);
 		result.forEach(function(pos){
 			pos.marker.setMap(map);
@@ -79,6 +79,7 @@ var ViewModel = function() {
 
 		res.fail(function(response, status, error) {
 		//TODO handle this failure
+			alert('Can not fetch the data');
 		});
 	}
 
@@ -113,11 +114,11 @@ var ViewModel = function() {
 				temp.marker.setAnimation(null);
 			}
 		});
-	}
+	};
 	google.maps.event.addDomListener(window, 'load', initMap());
 
 
-}
+};
 //create Meetup class
 var Meetup = function(meetup, map) {
 	var self = this;
@@ -130,7 +131,7 @@ var Meetup = function(meetup, map) {
 	self.count = meetup.headcount;
 	self.headcount = meetup.headcount;
 	self.groupName = meetup.group ? meetup.group.name : 'undefined';
-}
+};
 ko.applyBindings(new ViewModel());
 
 //create Position class
@@ -148,7 +149,7 @@ var Position = function(venue, map) {
 	});
 	self.add = function(meetup) {
 		self.meetups.push(meetup);
-	}
+	};
 	self.string = ko.computed(function() {
 		var result = '<ul class="info-window-list">';
 		self.meetups().forEach(function(meetup) {
@@ -166,4 +167,4 @@ var Position = function(venue, map) {
 		map: map,
 		animation: google.maps.Animation.DROP
 	});
-}
+};
