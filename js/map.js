@@ -1,5 +1,5 @@
-var meetupURL = 'https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=95035&text=coding java python c c++&radius=20&status=upcoming&page=50&key=6ab5e2d3c46794b78504857152479b';
-
+var meetupURL = 'https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=95035&text=coding java python c c++&radius=20&status=upcoming&page=50&key=2d201a1af16566d7d728472e63d4';
+var map;
 /*A Google Map object*/
 var googleMap = function(center, element) {
 	var self = this;
@@ -14,6 +14,22 @@ var googleMap = function(center, element) {
 //Initial map
 
 
+function initMap() {
+	var element = document.getElementById('map');
+	var center = {
+		lat: 37.4347,
+		lng: -121.8950
+	};
+	if(navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(function(position) {
+			center = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+			};
+		});
+	}
+	map = googleMap(center, element);
+}
 
 //Create ViewModel
 var ViewModel = function() {
@@ -64,8 +80,8 @@ var ViewModel = function() {
 
 		res.fail(function(response, status, error) {
 		//TODO handle this failure
-			alert('Can not fetch the data');
-		});
+		alert('Can not fetch the data');
+	});
 	}
 
 	function addMeetup(meetup) {

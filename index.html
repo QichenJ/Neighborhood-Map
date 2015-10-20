@@ -36,26 +36,10 @@
 		</div>
 	</div>
 	<script>
-		var map;
-		function initMap() {
-	var element = document.getElementById('map');
-	var center = {
-		lat: 37.4347,
-		lng: -121.8950
-	};
-	if(navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position) {
-			center = {
-				lat: position.coords.latitude,
-				lng: position.coords.longitude
-			};
-		});
-	}
-	map = googleMap(center, element);
-}
+
 
 	</script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBDG4PEiSz4kfikxfuEJvSZ33PWp5HPJM&callback=initMap"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBDG4PEiSz4kfikxfuEJvSZ33PWp5HPJM"></script>
 	<script src="js/map.js"></script>
 </body>
 </html>
