@@ -1,5 +1,6 @@
 var meetupURL = 'https://api.meetup.com/2/open_events?&sign=true&photo-host=public&zip=95035&text=coding java python c c++&radius=20&status=upcoming&page=50&key=2d201a1af16566d7d728472e63d4';
 var map;
+var infowindow;
 /*A Google Map object*/
 var googleMap = function(center, element) {
 	var self = this;
@@ -29,14 +30,48 @@ function initMap() {
 		});
 	}
 	map = googleMap(center, element);
+	fetchData(meetupURL);
+	infowindow = new google.maps.InfoWindow({maxWidth : 250});
 }
+
+function fetchData(url) {
+	var data;
+	var self = myViewModel;
+	console.log(myViewModel);
+	console.log(self);
+	var res = $.ajax({
+		url: url,
+		type: 'GET',
+		timeout: 5000,
+		dataType: 'jsonp',
+		cache: false
+	});
+	res.done(function(response) {
+		data = response.results;
+		data.forEach(function(meetup) {
+			var newMeet = new Meetup(meetup, map);
+			self.meetups.push(newMeet);
+			self.addMeetup(newMeet);
+		});
+	self.positions().forEach(function(position) {
+		google.maps.event.addListener(position.marker, 'click', function() {
+			self.selectPos(position);
+			});
+		});
+	});
+
+		res.fail(function(response, status, error) {
+		//TODO handle this failure
+		alert('Can not fetch the data');
+		});
+}
+
 
 //Create ViewModel
 var ViewModel = function() {
 	var self = this;
 	self.meetups = ko.observableArray([]);
 	self.positions = ko.observableArray([]);
-	fetchData(meetupURL);
 	self.inputStr = ko.observable('');
 	self.search = function() {
 
@@ -55,36 +90,8 @@ var ViewModel = function() {
 		});
 		return result;
 	});
-	function fetchData(url) {
-		var data;
-		var res = $.ajax({
-			url: url,
-			type: 'GET',
-			timeout: 5000,
-			dataType: 'jsonp',
-			cache: false
-		});
-		res.done(function(response) {
-			data = response.results;
-			data.forEach(function(meetup) {
-				var newMeet = new Meetup(meetup, map);
-				self.meetups.push(newMeet);
-				addMeetup(newMeet);
-			});
-			self.positions().forEach(function(position) {
-				google.maps.event.addListener(position.marker, 'click', function() {
-					self.selectPos(position);
-				});
-			});
-		});
 
-		res.fail(function(response, status, error) {
-		//TODO handle this failure
-		alert('Can not fetch the data');
-	});
-	}
-
-	function addMeetup(meetup) {
+	self.addMeetup = function(meetup) {
 		if(meetup.hasVenue && meetup.venue.lat && meetup.venue.lon) {
 			var pos;
 			self.positions().forEach(function(position) {
@@ -100,7 +107,7 @@ var ViewModel = function() {
 			pos.add(meetup);
 		}
 	}
-	var infowindow = new google.maps.InfoWindow({maxWidth : 250});
+
 	self.selectPos = function (position) {
 		if(position.marker.getAnimation() !== null) {
 			position.marker.setAnimation(null);
@@ -116,10 +123,12 @@ var ViewModel = function() {
 			}
 		});
 	};
-	google.maps.event.addDomListener(window, 'load', initMap());
+	//google.maps.event.addDomListener(window, 'load', initMap());
 
 
 };
+
+var myViewModel = new ViewModel();
 //create Meetup class
 var Meetup = function(meetup, map) {
 	var self = this;
@@ -133,7 +142,7 @@ var Meetup = function(meetup, map) {
 	self.headcount = meetup.headcount;
 	self.groupName = meetup.group ? meetup.group.name : 'undefined';
 };
-ko.applyBindings(new ViewModel());
+ko.applyBindings(myViewModel);
 
 //create Position class
 var Position = function(venue, map) {
